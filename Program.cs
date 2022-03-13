@@ -12,23 +12,35 @@ namespace Stopwatch
             Menu();
         }
 
-        static void Start(int currentTime)
+        static void Start(int time)
         {
             
-            int pastTime = 10;
+            int currentTime = 0;
 
-            while (currentTime != pastTime)
+            while (currentTime != time)
             {
                 Clear();
                 currentTime++;
                 WriteLine(currentTime);
-                Thread.Sleep(100);
+                Thread.Sleep(1000);
             }
             Clear();
             WriteLine($"Stopwatch ended");
             Thread.Sleep(1500);
         }
 
+        static void PreStart(int time)
+        {
+            Clear();
+            WriteLine($"READY??.......");
+            Thread.Sleep(1000);
+            WriteLine($"SET.......");
+            Thread.Sleep(1000);
+            WriteLine($"GO!");
+            Thread.Sleep(1000);
+            Start(time);
+            
+        }
         static void Menu()
         {
             Clear();
@@ -42,8 +54,16 @@ namespace Stopwatch
             string timeAndType = ReadLine().ToLower();
             char typeOfTime = char.Parse(timeAndType.Substring((timeAndType.Length - 1), 1));
             int finalTime = int.Parse(timeAndType.Substring(0, timeAndType.Length - 1));
-            
-             
+
+            int multiplier = 1;
+            if (typeOfTime == 'm')
+                multiplier = 60;
+
+            if (finalTime == 0)
+                System.Environment.Exit(0);
+
+            int clock = finalTime * multiplier;
+            PreStart(clock);
         }
         
     }
